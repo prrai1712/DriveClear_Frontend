@@ -1,60 +1,117 @@
 # Deploy DriveClear Frontend on Vercel
 
-This is a **standalone frontend GitHub repo**. Connect it directly to Vercel — **no Root Directory** setting.
+Backend (Render): `https://driveclear-api.onrender.com/api/v1`
 
-Deploy backend first: [DriveClear_Backend](https://github.com/prrai1712/DriveClear_Backend) → [DEPLOY.md](https://github.com/prrai1712/DriveClear_Backend/blob/main/DEPLOY.md)
+GitHub repo: **https://github.com/prrai1712/DriveClear_Frontend**
 
 ---
 
-## Step 1 — Push to GitHub
+## Step 1 — GitHub (done)
 
-See [GITHUB.md](./GITHUB.md) if not pushed yet.
+Code is on `main`. To push future updates:
+
+```bash
+git add .
+git commit -m "your message"
+git push origin main
+```
 
 ---
 
 ## Step 2 — Import on Vercel
 
-1. https://vercel.com/new → import **DriveClear_Frontend** repo
-2. **Root Directory**: leave **empty**
-3. Framework: **Next.js** (auto-detected)
+1. Open **https://vercel.com/new**
+2. Import **prrai1712/DriveClear_Frontend**
+3. **Root Directory**: leave **empty**
+4. Framework: **Next.js** (auto-detected)
+5. Build settings (already in `vercel.json`):
+   - Build: `npm run build`
+   - Output: Next.js default
 
 ---
 
-## Step 3 — Environment variables
+## Step 3 — Environment variables (Vercel dashboard)
+
+**Required** (minimum for app + Render API):
 
 | Variable | Value |
 |----------|--------|
 | `NEXT_PUBLIC_API_URL` | `https://driveclear-api.onrender.com/api/v1` |
-| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase Console |
+
+Already set in `vercel.json` — Vercel will pick it up on import.
+
+**Recommended** (Firebase phone auth in production):
+
+| Variable | Where to get it |
+|----------|-----------------|
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase Console → Project settings → Web app |
 | `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | e.g. `driveclear-82af6.firebaseapp.com` |
 | `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `driveclear-82af6` |
 | `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET` | Firebase |
 | `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID` | Firebase |
 | `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase |
+
+**Only if backend encryption is enabled:**
+
+| Variable | Value |
+|----------|--------|
 | `NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_ENABLED` | `true` |
-| `NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_KEY` | Same as backend |
+| `NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_KEY` | Same 32-byte base64 key as Render backend |
+
+If encryption is off on Render (default), leave encryption vars unset or `false`.
 
 ---
 
-## Step 4 — Deploy & connect
+## Step 4 — Deploy
 
-1. Deploy → copy URL e.g. `https://driveclear-xxx.vercel.app`
-2. Render → `CORS_ALLOWED_ORIGINS` = that URL → redeploy backend
-3. Firebase → Authorized domains → add Vercel domain
+1. Click **Deploy**
+2. Wait for build (~2–3 min)
+3. Copy your URL, e.g. `https://driveclear-frontend.vercel.app`
+
+---
+
+## Step 5 — Connect backend (Render)
+
+On **Render** → **driveclear-api** → **Environment**:
+
+```env
+CORS_ALLOWED_ORIGINS=https://YOUR-VERCEL-URL.vercel.app,http://localhost:3000
+```
+
+**Redeploy** the backend after saving.
+
+### Razorpay (payments)
+
+On Render, set (or payments will fail with "Payment gateway is not configured"):
+
+```env
+RAZORPAY_KEY_ID=rzp_test_xxxxx
+RAZORPAY_KEY_SECRET=xxxxx
+RAZORPAY_WEBHOOK_SECRET=xxxxx
+```
+
+---
+
+## Step 6 — Firebase (optional)
+
+Firebase Console → Authentication → Settings → **Authorized domains** → add:
+
+- `YOUR-VERCEL-URL.vercel.app`
+- `localhost` (for local dev)
+
+---
+
+## Auto-deploy
+
+Vercel redeploys automatically on every `git push` to `main`.
 
 ---
 
 ## Local dev
 
-Default (no extra config): uses Render API via `.env.development`.
-
-For **local backend** only, in `.env.local`:
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
-NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_ENABLED=false
+```bash
+npm install
+npm run dev
 ```
 
-Clone backend repo as sibling (`../DriveClear_Backend`), run it on port 8000, then `npm run dev`.
-
-`vercel.json` and `.env.production` already set `NEXT_PUBLIC_API_URL` to `https://driveclear-api.onrender.com/api/v1`.
+Uses Render API via `.env.development`. Override in `.env.local` for local backend on port 8000.
