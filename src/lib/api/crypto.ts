@@ -36,7 +36,8 @@ async function importAesKey(): Promise<CryptoKey> {
   if (keyBytes.length !== 32) {
     throw new Error("NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_KEY must decode to 32 bytes");
   }
-  return crypto.subtle.importKey("raw", keyBytes, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
+  const keyMaterial = new Uint8Array(keyBytes);
+  return crypto.subtle.importKey("raw", keyMaterial, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
 }
 
 export function isEncryptedEnvelope(data: unknown): data is EncryptedEnvelope {

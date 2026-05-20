@@ -1,6 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { ApiClientError, ApiResponse } from "./types";
 import { getAccessToken, getRefreshToken, setTokens, clearTokens } from "../auth/token";
+import { API_BASE_URL } from "./config";
 import {
   encryptApiBody,
   isEncryptedEnvelope,
@@ -8,7 +9,7 @@ import {
   unwrapApiData,
 } from "./crypto";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+const API_URL = API_BASE_URL;
 
 /** Public auth routes must not send a stale Bearer token (DRF returns 401 before AllowAny). */
 function isPublicAuthRequest(url?: string): boolean {

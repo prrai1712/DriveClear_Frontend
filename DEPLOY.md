@@ -24,7 +24,7 @@ See [GITHUB.md](./GITHUB.md) if not pushed yet.
 
 | Variable | Value |
 |----------|--------|
-| `NEXT_PUBLIC_API_URL` | `https://YOUR-SERVICE.onrender.com/api/v1` |
+| `NEXT_PUBLIC_API_URL` | `https://driveclear-api.onrender.com/api/v1` |
 | `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase Console |
 | `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | e.g. `driveclear-82af6.firebaseapp.com` |
 | `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | `driveclear-82af6` |
@@ -46,9 +46,15 @@ See [GITHUB.md](./GITHUB.md) if not pushed yet.
 
 ## Local dev
 
+Default (no extra config): uses Render API via `.env.development`.
+
+For **local backend** only, in `.env.local`:
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_ENABLED=false
 ```
 
 Clone backend repo as sibling (`../DriveClear_Backend`), run it on port 8000, then `npm run dev`.
+
+`vercel.json` and `.env.production` already set `NEXT_PUBLIC_API_URL` to `https://driveclear-api.onrender.com/api/v1`.

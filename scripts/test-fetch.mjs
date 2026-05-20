@@ -5,7 +5,9 @@ const page = await browser.newPage();
 await page.goto("http://localhost:3000/login");
 const status = await page.evaluate(async () => {
   try {
-    const r = await fetch("http://127.0.0.1:8000/api/v1/health/");
+    const api =
+      process.env.NEXT_PUBLIC_API_URL || "https://driveclear-api.onrender.com/api/v1";
+    const r = await fetch(`${api.replace(/\/$/, "")}/health/`);
     return { ok: r.ok, status: r.status };
   } catch (e) {
     return { error: String(e) };

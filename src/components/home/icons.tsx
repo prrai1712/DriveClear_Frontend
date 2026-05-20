@@ -1,46 +1,123 @@
 import clsx from "clsx";
 
-export function IconShield({ className = "w-4 h-4" }: { className?: string }) {
+type IconProps = { className?: string; size?: number };
+
+function iconSize(className?: string, size = 16): number {
+  if (!className) return size;
+  if (className.includes("w-3.5") || className.includes("h-3.5")) return 14;
+  if (className.includes("w-5") || className.includes("h-5")) return 20;
+  if (className.includes("w-4") || className.includes("h-4")) return 16;
+  return size;
+}
+
+export function IconShield({ className = "w-4 h-4" }: IconProps) {
+  const s = iconSize(className);
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    <svg
+      className={className}
+      width={s}
+      height={s}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+      />
     </svg>
   );
 }
 
-export function IconLock({ className = "w-4 h-4" }: { className?: string }) {
+export function IconLock({ className = "w-4 h-4" }: IconProps) {
+  const s = iconSize(className);
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+    <svg
+      className={className}
+      width={s}
+      height={s}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+      />
     </svg>
   );
 }
 
-export function IconCard({ className = "w-4 h-4" }: { className?: string }) {
+export function IconCard({ className = "w-4 h-4" }: IconProps) {
+  const s = iconSize(className);
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+    <svg
+      className={className}
+      width={s}
+      height={s}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+      />
     </svg>
   );
 }
 
-export function IconVehicle({ className = "w-5 h-5" }: { className?: string }) {
+export function IconVehicle({ className = "w-5 h-5" }: IconProps) {
+  const s = iconSize(className, 20);
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375A1.125 1.125 0 012.25 17.25V14.25m12 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H9.564a2.056 2.056 0 00-1.58.86 17.902 17.902 0 00-3.213 9.193c-.039.62.469 1.124 1.09 1.124H8.25z" />
+    <svg
+      className={className}
+      width={s}
+      height={s}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375A1.125 1.125 0 012.25 17.25V14.25m12 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H9.564a2.056 2.056 0 00-1.58.86 17.902 17.902 0 00-3.213 9.193c-.039.62.469 1.124 1.09 1.124H8.25z"
+      />
     </svg>
   );
 }
 
-export function IconHistory({ className = "w-4 h-4" }: { className?: string }) {
+export function IconHistory({ className = "w-4 h-4" }: IconProps) {
+  const s = iconSize(className);
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      width={s}
+      height={s}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   );
 }
 
 export function IconChevron({ open, className }: { open: boolean; className?: string }) {
+  const s = iconSize(className, 20);
   return (
     <svg
       className={clsx(
@@ -48,6 +125,8 @@ export function IconChevron({ open, className }: { open: boolean; className?: st
         open && "rotate-180",
         className,
       )}
+      width={s}
+      height={s}
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"

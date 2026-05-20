@@ -1,7 +1,8 @@
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
+import { getAccessToken } from "./token-storage";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+const API_URL =
+  process.env.EXPO_PUBLIC_API_URL || "https://driveclear-api.onrender.com/api/v1";
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -10,9 +11,11 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-  const token = await SecureStore.getItemAsync("access_token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  config.headers["X-Device-Platform"] = "mobile";
+  const token = await getAccessToken();
+  if (token) {
+    config.headers.set("Authorization", `Bearer ${token}`);
+  }
+  config.headers.set("X-Device-Platform", "mobile");
   return config;
 });
 
