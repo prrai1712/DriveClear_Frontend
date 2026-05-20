@@ -27,7 +27,11 @@ export function getApiErrorMessage(err: unknown): string {
       return "Request timed out. The challan service may be slow — please try again in a moment.";
     }
     if (err.message === "Network Error" && !err.response) {
-      return "Cannot reach the API server. Check that the backend is running on port 8000.";
+      return (
+        "Cannot reach the API server. This is usually a CORS issue: add your site URL to " +
+        "CORS_ALLOWED_ORIGINS on Render (driveclear-api), then redeploy the backend. " +
+        "API: https://driveclear-api.onrender.com/api/v1"
+      );
     }
     if (err.message) return err.message;
   }
