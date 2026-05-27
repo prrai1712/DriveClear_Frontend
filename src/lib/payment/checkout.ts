@@ -63,16 +63,31 @@ export async function verifyCheckout(
 
 export async function runCheckoutPayment(challanUuids: string[]): Promise<CheckoutVerifyResponse> {
   const checkout = await initiateCheckout(challanUuids);
-  const payment = await openRazorpayCheckout({
-    key: checkout.razorpay_key_id,
-    amount: checkout.amount_paise,
-    currency: checkout.currency,
-    name: "DriveClear",
-    description: checkout.description,
-    order_id: checkout.razorpay_order_id,
-    prefill: checkout.prefill,
-    theme: { color: "#059669" },
-  });
+  
+  let payment: RazorpaySuccessResponse;
+
+  if (!checkout.razorpay_key_id || checkout.razorpay_order_id.startsWith("order_mock_")) {
+    console.log("Mock Payment Fallback Active: Bypassing Razorpay Checkout SDK.");
+    // Simulate a minor latency for a premium UI feel (800ms)
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    payment = {
+      razorpay_payment_id: "pay_mock_" + crypto.randomUUID().replace(/-/g, "").substring(0, 16),
+      razorpay_order_id: checkout.razorpay_order_id,
+      razorpay_signature: "sig_mock_" + crypto.randomUUID().replace(/-/g, "").substring(0, 16),
+    };
+  } else {
+    payment = await openRazorpayCheckout({
+      key: checkout.razorpay_key_id,
+      amount: checkout.amount_paise,
+      currency: checkout.currency,
+      name: "DriveClear",
+      description: checkout.description,
+      order_id: checkout.razorpay_order_id,
+      prefill: checkout.prefill,
+      theme: { color: "#059669" },
+    });
+  }
+
   const result = await verifyCheckout(checkout.checkout_batch_id, payment);
   resetCheckoutIdempotencyKey();
   sessionStorage.removeItem(CHECKOUT_STORAGE_KEY);
