@@ -2,7 +2,7 @@ import axios from "axios";
 import { getAccessToken } from "./token-storage";
 
 const API_URL =
-  process.env.EXPO_PUBLIC_API_URL || "https://driveclear-api.onrender.com/api/v1";
+  process.env.EXPO_PUBLIC_API_URL || "https://driveclearbackend-production.up.railway.app/api/v1";
 
 export const api = axios.create({
   baseURL: API_URL,

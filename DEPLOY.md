@@ -1,6 +1,6 @@
 # Deploy DriveClear Frontend on Vercel
 
-Backend (Render): `https://driveclear-api.onrender.com/api/v1`
+Backend (Railway): `https://driveclearbackend-production.up.railway.app/api/v1`
 
 GitHub repo: **https://github.com/prrai1712/DriveClear_Frontend**
 
@@ -36,7 +36,7 @@ git push origin main
 
 | Variable | Value |
 |----------|--------|
-| `NEXT_PUBLIC_API_URL` | `https://driveclear-api.onrender.com/api/v1` |
+| `NEXT_PUBLIC_API_URL` | `https://driveclearbackend-production.up.railway.app/api/v1` |
 
 Already set in `vercel.json` — Vercel will pick it up on import.
 
@@ -56,9 +56,9 @@ Already set in `vercel.json` — Vercel will pick it up on import.
 | Variable | Value |
 |----------|--------|
 | `NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_ENABLED` | `true` |
-| `NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_KEY` | Same 32-byte base64 key as Render backend |
+| `NEXT_PUBLIC_API_PAYLOAD_ENCRYPTION_KEY` | Same 32-byte base64 key as Railway backend |
 
-If encryption is off on Render (default), leave encryption vars unset or `false`.
+If encryption is off on Railway (default), leave encryption vars unset or `false`.
 
 ---
 
@@ -70,9 +70,9 @@ If encryption is off on Render (default), leave encryption vars unset or `false`
 
 ---
 
-## Step 5 — Connect backend (Render)
+## Step 5 — Connect backend (Railway)
 
-On **Render** → **driveclear-api** → **Environment**:
+On **Railway** → **Environment Variables**:
 
 ```env
 CORS_ALLOWED_ORIGINS=https://YOUR-VERCEL-URL.vercel.app,http://localhost:3000
@@ -82,7 +82,7 @@ CORS_ALLOWED_ORIGINS=https://YOUR-VERCEL-URL.vercel.app,http://localhost:3000
 
 ### Razorpay (payments)
 
-On Render, set (or payments will fail with "Payment gateway is not configured"):
+On Railway, set (or payments will fail with "Payment gateway is not configured"):
 
 ```env
 RAZORPAY_KEY_ID=rzp_test_xxxxx
@@ -114,4 +114,4 @@ npm install
 npm run dev
 ```
 
-Uses Render API via `.env.development`. Override in `.env.local` for local backend on port 8000.
+Uses Railway API via `.env.development`. Override in `.env.local` for local backend on port 8000.

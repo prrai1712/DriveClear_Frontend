@@ -29,8 +29,8 @@ export function getApiErrorMessage(err: unknown): string {
     if (err.message === "Network Error" && !err.response) {
       return (
         "Cannot reach the API server. This is usually a CORS issue: add your site URL to " +
-        "CORS_ALLOWED_ORIGINS on Render (driveclear-api), then redeploy the backend. " +
-        "API: https://driveclear-api.onrender.com/api/v1"
+        "CORS_ALLOWED_ORIGINS on Railway, then redeploy the backend. " +
+        "API: https://driveclearbackend-production.up.railway.app/api/v1"
       );
     }
     if (err.message) return err.message;

@@ -2,7 +2,7 @@
 
 Standalone Next.js app — **its own GitHub repo**, deployed to **Vercel**.
 
-Backend repo: [DriveClear_Backend](https://github.com/prrai1712/DriveClear_Backend) (Render).
+Backend repo: [DriveClear_Backend](https://github.com/prrai1712/DriveClear_Backend) (Railway).
 
 ## GitHub (separate repo)
 
@@ -24,13 +24,13 @@ See [GITHUB.md](./GITHUB.md) for full steps.
 
 ```bash
 npm install
-cp .env.example .env.local   # optional — .env.development already points at Render
+cp .env.example .env.local   # optional — .env.development already points at Railway
 npm run dev
 ```
 
 Open http://localhost:3000. By default the app calls the hosted API:
 
-`https://driveclear-api.onrender.com/api/v1`
+`https://driveclearbackend-production.up.railway.app/api/v1`
 
 To use a **local backend** on port 8000, set in `.env.local`:
 
